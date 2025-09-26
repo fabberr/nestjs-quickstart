@@ -1,6 +1,6 @@
 # nestjs-quickstart
 
-## Setup
+## Dependencies
 
 ```bash
 # Node.js, NPM
@@ -13,4 +13,3 @@ sudo npm install --global @nestjs/cli
 nest new nestjs-quickstart
 
 ```
-
