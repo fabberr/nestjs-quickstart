@@ -1,33 +1,33 @@
 import { Body, Controller, Get, Param, Post, Patch, Delete, Query } from '@nestjs/common';
 
-type User = {
+export class User {
     id: number;
     name: string;
     document: string;
     about?: string;
     createdAt: string;
     updatedeAt?: string;
-};
+}
 
-type UserResponse = User;
+export class UserResponseDto extends User { }
 
-type CreateUserRequest = {
+export class CreateUserRequestDto {
     name: string;
     document: string;
-};
+}
 
-type PatchUserRequest = {
+export class PatchUserRequestDto {
     name?: string;
     document?: string;
-};
+}
 
 @Controller('users')
 export class UsersController {
 
     @Post()
     createUser(
-        @Body() body: CreateUserRequest
-    ): UserResponse {
+        @Body() body: CreateUserRequestDto
+    ): UserResponseDto {
         return {
             id: 1,
             name: body.name,
@@ -41,7 +41,7 @@ export class UsersController {
     findAllUsers(
         @Query('name') name: string,
         @Query('document') document: string
-    ): UserResponse {
+    ): UserResponseDto {
         return {
             id: 1,
             name: name ?? 'Hello World',
@@ -52,7 +52,7 @@ export class UsersController {
     }
 
     @Get(':id')
-    findUserById(@Param('id') id: number) : UserResponse {
+    findUserById(@Param('id') id: number) : UserResponseDto {
         return {
             id,
             name: 'Hello World',
@@ -65,8 +65,8 @@ export class UsersController {
     @Patch(':id')
     patchUserById(
         @Param('id') id: number,
-        @Body() body: PatchUserRequest
-    ): UserResponse {
+        @Body() body: PatchUserRequestDto
+    ): UserResponseDto {
         return {
             id,
             name: body.name ?? 'Hello World',
@@ -78,7 +78,7 @@ export class UsersController {
     }
 
     @Delete(':id')
-    deleteUserById(@Param('id') id: number): UserResponse {
+    deleteUserById(@Param('id') id: number): UserResponseDto {
         return {
             id,
             name: 'Hello World',
