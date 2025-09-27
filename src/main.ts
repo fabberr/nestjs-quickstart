@@ -1,6 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { apiReference } from '@scalar/nestjs-api-reference';
+
+const OpenApiReferenceEndpoint: string = '/api';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,9 +13,14 @@ async function bootstrap() {
     .setDescription('API description goes here')
     .setVersion('1.0')
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, openApiConfig);
+  const openApiDocument = SwaggerModule.createDocument(app, openApiConfig);
 
-  SwaggerModule.setup('api', app, documentFactory);
+  app.use(
+    OpenApiReferenceEndpoint,
+    apiReference({
+      content: openApiDocument,
+    }),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }
