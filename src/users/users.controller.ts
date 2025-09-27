@@ -25,9 +25,9 @@ export class PatchUserRequestDto {
 export class UsersController {
 
     @Post()
-    createUser(
+    async createUser(
         @Body() body: CreateUserRequestDto
-    ): UserResponseDto {
+    ): Promise<UserResponseDto> {
         return {
             id: 1,
             name: body.name,
@@ -38,10 +38,10 @@ export class UsersController {
     }
 
     @Get()
-    findAllUsers(
+    async findAllUsers(
         @Query('name') name: string,
         @Query('document') document: string
-    ): UserResponseDto {
+    ): Promise<UserResponseDto> {
         return {
             id: 1,
             name: name ?? 'Hello World',
@@ -52,7 +52,9 @@ export class UsersController {
     }
 
     @Get(':id')
-    findUserById(@Param('id') id: number) : UserResponseDto {
+    async findUserById(
+        @Param('id') id: number
+    ) : Promise<UserResponseDto> {
         return {
             id,
             name: 'Hello World',
@@ -63,10 +65,10 @@ export class UsersController {
     }
 
     @Patch(':id')
-    patchUserById(
+    async patchUserById(
         @Param('id') id: number,
         @Body() body: PatchUserRequestDto
-    ): UserResponseDto {
+    ): Promise<UserResponseDto> {
         return {
             id,
             name: body.name ?? 'Hello World',
@@ -78,7 +80,9 @@ export class UsersController {
     }
 
     @Delete(':id')
-    deleteUserById(@Param('id') id: number): UserResponseDto {
+    async deleteUserById(
+        @Param('id') id: number
+    ): Promise<UserResponseDto> {
         return {
             id,
             name: 'Hello World',
